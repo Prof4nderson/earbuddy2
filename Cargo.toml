@@ -1,0 +1,46 @@
+[package]
+name = "earbuddy"
+version = "0.2.0"
+edition = "2021"
+
+[dependencies]
+# Alternado de game-activity para native-activity
+eframe = { version = "0.31", default-features = false, features = ["glow", "x11", "wayland", "default_fonts"] }
+
+# Áudio + ML
+cpal = "0.15"
+ort = { version = "2.0.0-rc.4", features = ["download-binaries"] }
+tts = "0.26"
+
+# Utilitários
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+ureq = "3"
+
+[features]
+default = []
+android = ["eframe/android-native-activity"]
+
+[target.'cfg(target_os = "android")'.dependencies]
+android-activity = { version = "0.6", features = ["native-activity"] }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = true
+
+[lib]
+name = "earbuddy"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "earbuddy-app" # Alterado de "earbuddy" para evitar conflito com a lib
+path = "src/main.rs"
+
+[package.metadata.android]
+package = "com.suaempresa.earbuddy"
+build_targets = ["aarch64-linux-android"]
+
+[[package.metadata.android.uses_permission]]
+name = "android.permission.RECORD_AUDIO"

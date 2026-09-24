@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.suaempresa.earbuddy">
+
+    <application
+        android:label="earbuddy"
+        android:hasCode="true">
+        
+        <!-- Altere android:name para GameActivity -->
+        <activity
+            android:name="com.google.androidgamesdk.GameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|screenLayout|smallestScreenSize"
+            android:exported="true">
+            
+            <!-- Nome do seu binário Rust compilado (.so) -->
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="earbuddy" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    </application>
+</manifest>
